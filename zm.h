@@ -1,0 +1,10 @@
+#include <ncurses.h>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <sys/ioctl.h>
+#include <termios.h>
+#include <unistd.h>
+bool kbhit();
+void shwfield(int*,int*,std::vector<int>*);
+void game();
