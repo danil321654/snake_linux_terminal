@@ -1,26 +1,28 @@
 #include "zm.h"
 void game()
 {
+srand(static_cast<unsigned int>(time(0)));
     initscr();
-
+    use_legacy_coding(2);
     curs_set(0);
     keypad(stdscr, true); 
-    int fp=72;
-    std::vector<int> zmei{srand(time())};
+    int fp=rand()%720;
+    std::vector<int> zmei{rand()%720};
     zmei.reserve(100);
     shwfield(&fp,&zmei[zmei.size()-1],&zmei);
     int c;int newpos=0,k,lastpos=0;
+    int t =500000;
     while (1)
     {
-        usleep(200000);
+        usleep(t);
         if(kbhit()){
             c=getch();
-
-            if(c==259){ if(zmei.size()==1 ||newpos!=40)newpos=-40;}
-            else if(c==261) {if(zmei.size()==1 ||newpos!=-1)newpos=1;}
-            else if(c==260) {if(zmei.size()==1 ||newpos!=1)newpos=-1;}
-            else if(c==258) {if(zmei.size()==1 ||newpos!=-40)newpos=40;}
-                    }
+				switch(c){
+			   case 259: {if(zmei.size()==1 ||newpos!=40) newpos=-40;break;}
+			   case 261: {if(zmei.size()==1 ||newpos!=-1)	newpos=1;	break;}
+			   case 260: {if(zmei.size()==1 ||newpos!=1)	newpos=-1;	break;}
+			   case 258: {if(zmei.size()==1 ||newpos!=-40)newpos=40; break;}
+					 } }
         lastpos=zmei.back();
          if((zmei[0]-39)%40==0&&newpos==1) return;
          else if (zmei[0]%40==0&&newpos==-1) return;
@@ -33,6 +35,7 @@ void game()
         shwfield(&fp,&k,&zmei);
         refresh();
         k=0;
+	if(t>100000) t=500000-zmei.size()*10000;
     }
 	endwin();
 }
@@ -41,26 +44,26 @@ void shwfield(int* foodpos,int* lastpos, std::vector<int>* zmei)
 	clear();
 printw(" ");
 refresh();
-     for (int i=0;i<40;i++) {printw("1");refresh();}
+     for (int i=0;i<40;i++) {addch(115| A_ALTCHARSET);;refresh();}
      printw(" \n");
 refresh();
      char field [720]{0};
      if(*foodpos==(*zmei)[0]){zmei->push_back(*lastpos);*foodpos=rand()%720;}
-     for (int i=0;i<zmei->size();i++) field[(*zmei)[i]]='O';
+     for (int i=0;i<zmei->size();i++) field[(*zmei)[i]]='0';
      field[*foodpos]='+';
      for (int i=0;i<720;i++)
     {
         if(field[i]!='0' && field[i]!='+') field[i]=' ';
-        if (i>0 && i%40==0) printw("1");
-        if (i>0 && i%40==0) printw("\n");
-        if (i%40==0) printw("1");
+        if (i>0 && i%40==0){addch(120 | A_ALTCHARSET);printw("\n");}
+        if (i%40==0) addch(120 | A_ALTCHARSET);
         printw("%c",field[i]);
         refresh();
     }
-    printw("1\n ");
+addch(120 | A_ALTCHARSET);
+    printw("\n ");
 refresh();
-    for (int i=0;i<40;i++) {printw("1");refresh();}
-    printw("\n%d",zmei->size(),"\n");
+for (int i=0;i<40;i++) {addch(111 | A_ALTCHARSET);refresh();}
+    printw(" \n%d",zmei->size(),"\n");
     refresh();
 
     
