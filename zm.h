@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include <ncurses.h>
 #include <vector>
 #include <cstdlib>
@@ -8,3 +9,18 @@
 bool kbhit();
 void shwfield(int*,int*,std::vector<int>*);
 void game();
+=======
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstdlib>
+#include <stdio.h>
+#include <fcntl.h>
+#include <termios.h>
+#include <stropts.h>
+#include <unistd.h>
+int _getch();
+int _kbhit();
+void game();
+void shwfield(int*,int*,std::vector<int>*);
+>>>>>>> 0d0005d8b8f5344a54c8ee55941678f35e1a3c0d
